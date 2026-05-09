@@ -84,7 +84,7 @@ def si_sound(in_awnser):
 
 def gemini(gemini_key_word):
     # NOTE: It is best practice to load API keys from environment variables.
-    # Replace "AIzaSyAYKtkTEnUr7CNigsk0e1ACiI-Yp_YysWo" with your actual Gemini API key
+    # Replace "-----" with your actual Gemini API key
     client = genai.Client(api_key="AIzaSyAYKtkTEnUr7CNigsk0e1ACiI-Yp_YysWo")
     response = client.models.generate_content(
     model="gemini-2.5-flash", contents= gemini_key_word+" I NEED SMALL AWNSER"
