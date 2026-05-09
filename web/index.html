@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Assistant Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons via CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body style="border-radius: 20px;">
+    <div class="dashboard" style="border-radius: 20px;">
+        <div class="sidebar">
+            <div class="sidebar-item active"><i class="fas fa-home"></i></div>
+            <div class="sidebar-item"><i class="fas fa-bolt"></i></div>
+            <div class="sidebar-item"><i class="fas fa-list"></i></div>
+            <div class="sidebar-item"><i class="fas fa-chart-bar"></i></div>
+            <div class="sidebar-item"><i class="fas fa-cogs"></i></div>
+            <div class="sidebar-item"><i class="fas fa-bell"></i></div>
+            <div class="sidebar-item"><i class="fas fa-wifi"></i></div>
+            <div class="sidebar-item"><i class="fas fa-info-circle"></i></div>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <div class="nav-links">
+                    <span>HOME</span>
+                </div>
+                <div class="search-and-menu">
+                    <i class="fas fa-search"></i>
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+            </div>
+
+            <div class="grid-container">
+                <div class="card wide time-card">
+                    <div class="card-content">
+                        <div class="time" id="live-time">23.00 PM</div>
+                        <div class="date" id="live-date">2022-10-26</div>
+                    </div>
+                </div>
+
+                <div class="card temperature-card">
+                    <div class="card-content">
+                        <i class="fas fa-thermometer-half icon"></i>
+                        <div class="value" id="feels-like">30.40 °C</div>
+                        <div class="label">Room Temperature</div>
+                    </div>
+                </div>
+
+                <div class="card humidity-card">
+                    <div class="card-content">
+                        <i class="fas fa-humidity icon"></i>
+                        <div class="value" id="humidity">75.40%</div>
+                        <div class="label">Room Humidity</div>
+                    </div>
+                </div>
+
+                <div class="card relay-card">
+                    <div class="card-content">
+                        <i class="fas fa-lightbulb icon"></i>
+                        <div class="label">Relay</div>
+                        <div class="status">On</div>
+                    </div>
+                </div>
+
+                <div class="card weather-card">
+                    <div class="card-content">
+                        <div class="city"id="city">Colombo</div>
+                        <div class="current-weather">
+                            <i class="fas fa-cloud-sun icon"></i>
+                            <div class="temp" id="temperature">29.6 °C</div>
+                         
+                         </div></div>
+                        <div class="details">
+                            <div class="detail-item"><i class="fas fa-cloud"></i> 64%</div>
+                            <div class="detail-item" id="wind-speed"><i class="fas fa-wind"></i> W 12.31 km/h</div>
+                            <div class="detail-item" id="pressure"><i class="fas fa-water"></i> 1009 hPa</div>
+                            <div class="detail-item" id="live-time02"><i class="fas fa-clock"></i> 9:57:16 AM</div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+
+                    
+
+                </div>
+                
+                
+            </div>
+            <div class="mic-button-container fixed bottom-4 right-4">
+                        <div class="mic-button-container">
+            <!-- The main button container -->
+            <div 
+                id="mic-button"
+                class="
+                    relative flex items-center justify-center cursor-pointer 
+                    transition-all duration-500 ease-in-out transform 
+                    w-20 h-20 rounded-full shadow-md
+                "
+            >
+                <!-- Content for the initial state -->
+                <div id="initial-content" class="relative flex items-center justify-center w-full h-full">
+                    <i id="mic-icon-initial" class="fas fa-microphone transition-opacity duration-300 opacity-100 mic-icon-initial-color" style="font-size: 2.53125rem;"></i>
+                </div>
+
+                <!-- Content for the clicked state -->
+                <div id="active-content" class="hidden flex items-center justify-start w-full h-full px-4 gap-4 transition-opacity duration-300 opacity-0">
+                    <i id="mic-icon-active" class="fas fa-microphone animate-pulse" style="font-size: 1.8984375rem;"></i>
+                        <span class="text-white text-lg font-bold">
+                         Listening....
+                    </span>
+                </div>
+             </div>
+            </div>
+         </div>
+
+        
+            <div class="theme-toggle" id="themeToggle">
+                <i class="fas fa-sun"></i> </div>
+        </div>
+    </div>
+    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+    <script src="script.js"> </script>
+</body>
+</html>

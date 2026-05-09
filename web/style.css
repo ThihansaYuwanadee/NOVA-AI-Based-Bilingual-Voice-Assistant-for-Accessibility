@@ -1,0 +1,545 @@
+/* Google Fonts - Poppins */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        /* Default Dark Mode Variables */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0a1f3a, #000000); /* Dark blue to black */
+            --text-color: #ffffff; /* White text */
+            --sidebar-bg: rgba(0, 0, 0, 0.3);
+            --card-bg-transparent: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --header-border: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --mic-button-bg: rgba(0, 0, 0, 0.4);
+            --mic-button-border: rgba(255, 255, 255, 0.3);
+            --chart-placeholder-bg: rgba(255, 255, 255, 0.05);
+            --chart-line-gradient: linear-gradient(to right, #4CAF50, #FFEB3B, #F44336);
+            --card-active-glow: rgba(0, 200, 255, 0.5); /* Blue glow */
+            --mic-active-glow: rgba(76, 175, 80, 0.7); /* Green glow */
+
+            /* Specific card gradient tints (subtle on dark mode) */
+            --card-gradient-time: linear-gradient(135deg, rgba(26, 42, 108, 0.1), rgba(0, 123, 255, 0.1));
+            --card-gradient-temp: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1));
+            --card-gradient-humidity: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(3, 169, 244, 0.1));
+            --card-gradient-relay: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 152, 0, 0.1));
+            --card-gradient-weather: linear-gradient(135deg, rgba(63, 81, 181, 0.1), rgba(33, 150, 243, 0.1));
+            --card-gradient-co2: linear-gradient(135deg, rgba(96, 125, 139, 0.1), rgba(158, 158, 158, 0.1));
+            --card-gradient-pir: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(233, 30, 99, 0.1));
+
+            --border-radius: 15px;
+            --sidebar-width: 80px;
+
+            /* Liquid Effect Variables */
+            --rotateX: 0deg;
+            --rotateY: 0deg;
+            --blur-radius: 0px;
+            --transition-speed: 0.1s; /* Faster for liquid feeling */
+        }
+
+        /* Light Mode Variables - applied when body has .light-theme class */
+        body.light-theme {
+            --bg-gradient: linear-gradient(135deg, #a7d9f7, #c1e8ff, #e0f2f7); /* Extra light blue gradient */
+            --text-color: #333333; /* Dark grey text */
+            --sidebar-bg: rgba(255, 255, 255, 0.4);
+            --card-bg-transparent: rgba(255, 255, 255, 0.5);
+            --card-border: rgba(0, 0, 0, 0.1);
+            --header-border: rgba(0, 0, 0, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --mic-button-bg: rgba(255, 255, 255, 0.6);
+            --mic-button-border: rgba(0, 0, 0, 0.1);
+            --chart-placeholder-bg: rgba(0, 0, 0, 0.05);
+            --chart-line-gradient: linear-gradient(to right, #4CAF50, #FFEB3B, #F44336);
+            --card-active-glow: rgba(0, 100, 200, 0.3); /* Darker blue glow */
+            --mic-active-glow: rgba(76, 175, 80, 0.5); /* Darker green glow */
+
+            /* Specific card gradient tints (more visible on light mode) */
+            --card-gradient-time: linear-gradient(135deg, rgba(200, 220, 255, 0.2), rgba(255, 255, 255, 0.2));
+            --card-gradient-temp: linear-gradient(135deg, rgba(144, 238, 144, 0.2), rgba(173, 216, 230, 0.2));
+            --card-gradient-humidity: linear-gradient(135deg, rgba(173, 216, 230, 0.2), rgba(240, 248, 255, 0.2));
+            --card-gradient-relay: linear-gradient(135deg, rgba(255, 250, 205, 0.2), rgba(255, 228, 181, 0.2));
+            --card-gradient-weather: linear-gradient(135deg, rgba(200, 220, 255, 0.2), rgba(220, 240, 255, 0.2));
+            --card-gradient-co2: linear-gradient(135deg, rgba(220, 220, 220, 0.2), rgba(240, 240, 240, 0.2));
+            --card-gradient-pir: linear-gradient(135deg, rgba(255, 99, 71, 0.2), rgba(255, 160, 122, 0.2));
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            overflow: hidden;
+            transition: background 0.5s ease-in-out, color 0.5s ease-in-out; /* Smooth theme transition */
+            
+        }
+
+        .dashboard {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            border-radius: 20px;
+            
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 2px 0 10px var(--shadow-color);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            transition: background 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+        }
+
+        .sidebar-item {
+            color: var(--text-color);
+            padding: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, background-color 0.3s ease, transform var(--transition-speed) ease-out;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
+            /* Liquid effect properties */
+            transform: perspective(1000px) rotateX(var(--rotateX)) rotateY(var(--rotateY));
+            filter: blur(var(--blur-radius));
+            transform-style: preserve-3d; /* Needed for 3D transforms */
+        }
+
+        .sidebar-item:hover {
+            opacity: 1;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-item.active {
+            opacity: 1;
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .sidebar-item:active {
+            transform: scale(0.95);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--header-border);
+            transition: border-color 0.5s ease-in-out;
+        }
+
+        .nav-links span {
+            margin-right: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links span:hover {
+            opacity: 1;
+        }
+
+        .search-and-menu i {
+            font-size: 1.2rem;
+            margin-left: 20px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s ease, transform 0.1s ease-out;
+            color: var(--text-color);
+        }
+
+        .search-and-menu i:hover {
+            opacity: 1;
+        }
+
+        .search-and-menu i:active {
+            transform: scale(0.9);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-auto-rows: minmax(100px, auto);
+            gap: 20px;
+            flex-grow: 1;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: var(--card-bg-transparent);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform var(--transition-speed) ease-out, box-shadow 0.1s ease-out, background 0.5s ease-in-out, border-color 0.5s ease-in-out, filter var(--transition-speed) ease-out;
+            /* Liquid effect properties */
+            transform-style: preserve-3d; /* Needed for 3D transforms */
+            transform: perspective(1000px) rotateX(var(--rotateX)) rotateY(var(--rotateY));
+            filter: blur(var(--blur-radius));
+        }
+
+        .card:active {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px var(--card-active-glow), 0 0 10px var(--card-active-glow);
+        }
+
+        /* Specific card backgrounds - using rgba for transparency */
+        .time-card {
+            grid-column: span 2;
+            background: var(--card-gradient-time);
+            align-items: flex-start;
+            text-align: left;
+            padding: 20px;
+            transition: background 0.5s ease-in-out;
+            min-height: 150px;
+        }
+
+        .time-card .time {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .time-card .date {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .temperature-card { background: var(--card-gradient-temp); transition: background 0.5s ease-in-out; min-height: 150px; }
+        .humidity-card {
+            background: var(--card-gradient-humidity);
+            transition: background 0.5s ease-in-out;
+            min-height: 150px; /* Or a specific height like height: 200px; */
+        }
+        .relay-card { background: var(--card-gradient-relay); transition: background 0.5s ease-in-out; min-height: 150px; }
+        .weather-card {
+            grid-column: 1 / span 3; /* Starts at column 1 and spans 3 columns */
+            background: var(--card-gradient-weather);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            padding: 15px;
+            min-height: 150px;
+            transition: background 0.5s ease-in-out;
+        }
+
+        .weather-card .current-weather {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .weather-card .current-weather .icon {
+            font-size: 2.5rem;
+            margin-right: 10px;
+        }
+
+        .weather-card .current-weather .temp {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        .weather-card .city {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .weather-card .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
+        }
+
+        .weather-card .details .detail-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .weather-card .details .detail-item i {
+            margin-right: 3px;
+        }
+
+        .weather-card .forecast {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 0.7rem;
+            border-top: 1px solid var(--header-border);
+            padding-top: 10px;
+            transition: border-color 0.5s ease-in-out;
+        }
+
+        .weather-card .forecast-day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            opacity: 0.8;
+        }
+
+        .co2-card {
+            background: var(--card-gradient-co2);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: right;
+            transition: background 0.5s ease-in-out;
+        }
+
+        .co2-card .value {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .co2-card .unit {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .co2-card .chart-placeholder {
+            width: 100%;
+            height: 60px;
+            background-color: var(--chart-placeholder-bg);
+            border-radius: 5px;
+            margin-bottom: 8px;
+            background-image: linear-gradient(to right, transparent 0%, transparent 20%, rgba(0,255,0,0.3) 20%, rgba(0,255,0,0.3) 40%, transparent 40%, transparent 60%, rgba(0,255,0,0.3) 60%, rgba(0,255,0,0.3) 80%, transparent 80%);
+            background-size: 20% 100%;
+            background-repeat: no-repeat;
+            background-position-x: -10%;
+            position: relative;
+            transition: background-color 0.5s ease-in-out;
+        }
+
+        .co2-card .chart-placeholder::before {
+            content: '';
+            position: absolute;
+            bottom: 3px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--chart-line-gradient);
+            border-radius: 3px;
+        }
+
+
+        .card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+
+        .card .value {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .card .label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .card .status {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+
+       /* Custom styles for the mic icon colors based on theme */
+             /* Custom styles for the mic icon colors based on theme */
+        /* Adjusted to a brighter, more vibrant green for both states */
+        .mic-icon-initial-color, #mic-icon-active {
+            color: #22c55e; /* A vibrant green like the image */
+        }
+        /* No specific light/dark icon colors needed now, as both should be vibrant green */
+
+        /* Styles for the initial, small microphone button (transparent glass) */
+        .mic-button-initial {
+            background: rgba(255, 255, 255, 0.15); /* Very light, subtle transparency */
+            backdrop-filter: blur(8px); /* Frosted glass effect */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle light border */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.1); /* Soft shadow with inner highlight */
+        }
+        body.light-theme .mic-button-initial {
+            background: rgba(255, 255, 255, 0.5); /* Slightly less transparent in light mode */
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+        }
+
+
+        /* Styles for the active, large microphone button (transparent gradient) */
+        .liquid-glass-effect-active {
+            backdrop-filter: blur(12px); /* Stronger blur for active state */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Consistent border for glass look */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.15); /* More prominent shadow */
+        }
+        body.light-theme .liquid-glass-effect-active {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Pulse animation for the active mic icon */
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: absolute; /* Position relative to main-content */
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg-transparent);
+            border: 1px solid var(--card-border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            box-shadow: 0 2px 10px var(--shadow-color);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: transform 0.2s ease, background 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+            z-index: 10; /* Ensure it's above other elements */
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        .theme-toggle:active {
+            transform: scale(0.95);
+        }
+
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .grid-container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            .time-card, .weather-card {
+                grid-column: span 1;
+            }
+            .time-card .time {
+                font-size: 2.0rem;
+            }
+            .theme-toggle {
+                top: 15px;
+                right: 15px;
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-around;
+                padding: 10px 0;
+                box-shadow: 0 2px 10px var(--shadow-color);
+            }
+            .sidebar-item {
+                padding: 8px;
+                font-size: 1.2rem;
+                margin-bottom: 0;
+            }
+            .main-content {
+                padding: 15px;
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding-bottom: 15px;
+            }
+            .nav-links {
+                margin-bottom: 10px;
+            }
+            .grid-container {
+                grid-template-columns: 1fr;
+                margin-bottom: 70px;
+                grid-auto-rows: minmax(80px, auto);
+            }
+            .card {
+                padding: 10px;
+                min-height: 100px;
+            }
+            .time-card .time {
+                font-size: 1.5rem;
+            }
+            .weather-card .current-weather .icon {
+                font-size: 2rem;
+            }
+            .weather-card .current-weather .temp {
+                font-size: 1.6rem;
+            }
+            .weather-card .details {
+                grid-template-columns: 1fr;
+                font-size: 0.7rem;
+            }
+            .weather-card .forecast {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+                font-size: 0.6rem;
+            }
+            .mic-button-container {
+                bottom: 15px;
+                right: 15px;
+                width: 50px;
+                height: 50px;
+            }
+            .mic-button-container .mic-button {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+        }
